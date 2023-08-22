@@ -1,24 +1,43 @@
 import React from 'react'
 import { Input } from "../../Components"
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
+import useForm from "../../Error/useForm"
+import axios from 'axios'
 
+  
 const SignIn = () => {
-  const [name, setName] = React.useState("")
-  const [email, setEmail] = React.useState("")
-  const [phone_No, setPhone_No] = React.useState("")
-  const [password, setPassword] = React.useState("")
-  // console.log(name)
+
+  const navigate = useNavigate()
+  const formLogin = () => {
+    console.log("Callback function when form is submitted!");
+    console.log("Form Values ", values);
+   }
+  const { handleChange, values, errors } = useForm()
+  const handleSubmit = async (event: any) => {
+
+    if(event) event.preventDefault();
+    await axios.post("http://localhost:1000/api/user/signin", values).then(() => {
+      navigate("/signin")
+    }).catch((error) => {
+      console.log(error);
+    })
+    if(Object.keys(errors).length === 0 && Object.keys(values).length !==0 ){
+      formLogin();
+    }else{
+        alert("There is an Error!");
+    }
+
+  }
+  // console.log(errors)
   return (
     <div className='w-[100%] flex justify-center align-center p-10'>
-      <form className="w-[100%] max-w-md flex align-center justify-center h-[550px] bg-gray-300
+      <form onSubmit={handleSubmit} className="w-[100%] max-w-md flex align-center justify-center h-[550px] bg-gray-300
     p-5 flex-col">
-        <h3 className="font-bold text-center mb-10 text-lg">Create Account</h3>
-        <Input inputValue={name } nameOfInput="User Name" setEmail={ setName} />
-        <Input inputValue={ email } nameOfInput="Email" setEmail={ setEmail} />
-        <Input inputValue={ phone_No } nameOfInput="Phone Number" setEmail={ setPhone_No} />
-        <Input inputValue={ password } nameOfInput="Password" setEmail={ setPassword } />
+        <h3 className="font-bold text-center mb-10 text-lg">Sign In User</h3>
+        <Input nameOfInput="Email" name="email" handleChange={handleChange } errors={errors.email}/>
+        <Input nameOfInput="Password" name="password" handleChange={handleChange } errors={errors.password}/>
         <button className='text-white bg-black py-2 rounded-md font-bold mt-5' type='submit'>Sign Up</button>
-        <p className='text-center mt-3 font-'>Already have an account <NavLink to="/signup"><span className='font-bold text-blue-500 cursor-pointer'>Sign Up</span></NavLink></p>
+        <p className='text-center mt-3 font-'>Already have an account <NavLink to="/signin"><span className='font-bold text-blue-500 cursor-pointer'>Sign In</span></NavLink></p>
       </form>
     </div>
   )

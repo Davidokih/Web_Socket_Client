@@ -1,26 +1,33 @@
 import React from 'react'
 import { Input } from "../../Components"
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 import useForm from "../../Error/useForm"
+import axios from 'axios'
+
   
 const SignUp = () => {
 
+  const navigate = useNavigate()
   const formLogin = () => {
     console.log("Callback function when form is submitted!");
     console.log("Form Values ", values);
    }
   const { handleChange, values, errors } = useForm()
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
 
     if(event) event.preventDefault();
-
+    await axios.post("http://localhost:1000/api/user/signup", values).then(() => {
+      navigate("/signin")
+    }).catch((error) => {
+      console.log(error);
+    })
     if(Object.keys(errors).length === 0 && Object.keys(values).length !==0 ){
       formLogin();
     }else{
         alert("There is an Error!");
     }
 
-}
+  }
   console.log(errors)
   return (
     <div className='w-[100%] flex justify-center align-center p-10'>

@@ -44,7 +44,7 @@ const useFrom = () => {
                 if(value.length <= 6){
                     setErrors({
                         ...errors,
-                        password:'Password should contains atleast 8 charaterss'
+                        password:'Password should contains atleast 6 charaterss'
                     })
                 }else {
                     let newObj = omit("password", errors)
