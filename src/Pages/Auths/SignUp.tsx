@@ -4,13 +4,11 @@ import { NavLink,useNavigate } from 'react-router-dom'
 import useForm from "../../Error/useForm"
 import axios from 'axios'
 
-  
 const SignUp = () => {
 
   const navigate = useNavigate()
   const formLogin = () => {
     console.log("Callback function when form is submitted!");
-    console.log("Form Values ", values);
    }
   const { handleChange, values, errors } = useForm()
   const handleSubmit = async (event: any) => {
@@ -28,7 +26,7 @@ const SignUp = () => {
     }
 
   }
-  console.log(errors)
+  // console.log(errors)
   return (
     <div className='w-[100%] flex justify-center align-center p-10'>
       <form onSubmit={handleSubmit} className="w-[100%] max-w-md flex align-center justify-center h-[550px] bg-gray-300

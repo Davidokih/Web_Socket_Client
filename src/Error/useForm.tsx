@@ -1,11 +1,9 @@
 import React from "react";
-// import { InputNames } from '../Types/Auth/Types'
 
 const omit = (key: any, {[key]: _,...obj})=> obj
 const useFrom = () => {
     const [values, setValues] = React.useState({})
     const [errors, setErrors] = React.useState({})
-    // console.log(values.)
 
     const validate = (event: any, name: any, value: any) => {
         switch (name) {
