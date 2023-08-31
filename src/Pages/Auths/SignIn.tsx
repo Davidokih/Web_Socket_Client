@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { Input } from "../../Components"
 import { NavLink,useNavigate } from 'react-router-dom'
 import useForm from "../../Error/useForm"
@@ -8,25 +8,25 @@ import axios from 'axios'
 const SignIn = () => {
 
   const navigate = useNavigate()
-  const formLogin = () => {
-    console.log("Callback function when form is submitted!");
-   }
   const { handleChange, values, errors } = useForm()
-  const handleSubmit = async (event: any) => {
-
-    if(event) event.preventDefault();
+  const formLogin = async () => {
     await axios.post("http://localhost:1000/api/user/signin", values).then((res) => {
-      console.log(res)
+      // console.log(res)
+      localStorage.setItem("auth_Token", res?.data.data)
       navigate("/chat_interface")
     }).catch((error) => {
       console.log(error);
     })
+   }
+  const handleSubmit = async (event: any) => {
+
+    if(event) event.preventDefault();
+    
     if(Object.keys(errors).length === 0 && Object.keys(values).length !==0 ){
       formLogin();
     }else{
         alert("There is an Error!");
     }
-
   }
   // console.log(errors)
   return (
