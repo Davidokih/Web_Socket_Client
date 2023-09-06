@@ -1,9 +1,18 @@
-.external-flex{
-    flex: 0.5 30px;
+.user-flex{
+    flex: 1;
+}
+
+.chat-flex{
+    flex: 1.5;
 }
 
 .display {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.text-bg {
+    color: black;
+    background-color: rgb(208, 206, 206);
 }
