@@ -4,6 +4,7 @@ import {
     SignUp,
     Chats
 } from "../Pages";
+// import Private from "../Private";
 const Routes = () => {
     let element = useRoutes([
         {

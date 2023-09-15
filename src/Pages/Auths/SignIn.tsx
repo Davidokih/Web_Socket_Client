@@ -9,7 +9,9 @@ const SignIn = () => {
 
   const navigate = useNavigate()
   const { handleChange, values, errors } = useForm()
-  const formLogin = async () => {
+
+  const formLogin = async (values: any) => {
+
     await axios.post("http://localhost:1000/api/user/signin", values).then((res) => {
       // console.log(res)
       localStorage.setItem("auth_Token", res?.data.data)
@@ -23,7 +25,7 @@ const SignIn = () => {
     if(event) event.preventDefault();
     
     if(Object.keys(errors).length === 0 && Object.keys(values).length !==0 ){
-      formLogin();
+      formLogin(values);
     }else{
         alert("There is an Error!");
     }
