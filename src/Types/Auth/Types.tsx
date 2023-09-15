@@ -10,4 +10,5 @@ export interface InputNames  {
 
 export interface ChatMessage {
     own?: boolean,
+    message?: any
 }

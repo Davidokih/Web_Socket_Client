@@ -9,6 +9,6 @@ export interface Conversation {
     // getSingle_user?: () => void,
     a?: string,
     currentChat?: any,
-    // user: {}
+    user: {}
     // userData?: {},
 }

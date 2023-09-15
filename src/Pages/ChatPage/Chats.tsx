@@ -51,7 +51,7 @@ const Chats = () => {
   return (
       <div className='w-[100%] flex align-center justify-center'>
       <div className='bg-gray-400 w-[35%] overflow-y-auto'><Users getUsers={ getUsers } setcurrentChat={ setcurrentChat}/></div>
-      <div className='chat-flex ml-3'> <ChatPage currentChat={ currentChat} /></div>
+      <div className='chat-flex ml-3'> <ChatPage currentChat={ currentChat } user={ user } /></div>
     </div>
   )
 }
