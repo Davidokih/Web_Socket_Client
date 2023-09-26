@@ -22,6 +22,11 @@ const ChatPage:React.FC<Conversation> = ({currentChat,user}) => {
       console.log(error);
     })
   }
+  console.log(currentChat);
+
+  const sendMessage = async () => {
+    
+  }
   
   useEffect(() => {
     get_messages()
@@ -31,7 +36,7 @@ const ChatPage:React.FC<Conversation> = ({currentChat,user}) => {
       {
         currentChat ? 
           <>
-            <div className='h-[100%] overflow-y-scroll'>
+            <div className='h-[100%] overflow-y-auto'>
               {
                 messages?.map((props: any) => {
                   <Messages message={props} own={ props.sendeId === user?.id} />

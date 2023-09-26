@@ -5,17 +5,17 @@ import axios from 'axios'
 
 const Chats = () => {
 
-  const [getUsers, setGetUsers] = useState([])
+  // const [getUsers, setGetUsers] = useState([])
   const [user, setUser] = useState()
   const [conversation, setConversation] = useState([])
-  const [currentChat, setcurrentChat] = useState(false)
+  const [currentChat, setcurrentChat] = useState(null)
   const [messages, setMessages] = useState([])
 
-  const getUsersApi = () => {
-    axios.get("http://localhost:1000/api/user/").then((res) => {
-      setGetUsers(res.data.data)
-    })
-  }
+  // const getUsersApi = () => {
+  //   axios.get("http://localhost:1000/api/user/").then((res) => {
+  //     setGetUsers(res.data.data)
+  //   })
+  // }
 
   const user_token = localStorage.getItem("auth_Token")
   // console.log(user_token)
@@ -26,7 +26,7 @@ const Chats = () => {
     try {
       const res = await axios.get("http://localhost:1000/api/coversation", { headers: config })
       setConversation(res.data.data)
-      console.log(res.data.data)
+      console.log(res.data)
     } catch (error) {
       console.log(error);
     }
@@ -44,13 +44,17 @@ const Chats = () => {
     }
   useEffect(() => {
     getConversation()
-    getUsersApi()
+    // getUsersApi()
     getUser()
   }, [])
   
   return (
       <div className='w-[100%] flex align-center justify-center'>
-      <div className='bg-gray-400 w-[35%] overflow-y-auto'><Users getUsers={ getUsers } setcurrentChat={ setcurrentChat}/></div>
+      <div className='bg-gray-400 w-[35%] overflow-y-auto'>
+        { conversation?.map((props) => (
+          <Users conversation={ props } user={ user} setcurrentChat={ setcurrentChat}/>
+        ))}
+      </div>
       <div className='chat-flex ml-3'> <ChatPage currentChat={ currentChat } user={ user } /></div>
     </div>
   )

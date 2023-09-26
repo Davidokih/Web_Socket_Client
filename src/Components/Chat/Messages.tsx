@@ -2,7 +2,7 @@ import React from 'react'
 import "../../Global_Style.css"
 import {ChatMessage} from "../../Types/Auth/Types"
 
-const Messages: React.FC<ChatMessage> = ({own}) => {
+const Messages: React.FC<ChatMessage> = ({message, own}) => {
   return (
     <div className="flex flex-col">
       <div className={`flex ${own ? "justify-end" : null}`}>

@@ -1,8 +1,9 @@
 
 
 export interface userApi {
-    getUsers: {}[],
-    setcurrentChat: React.Dispatch<React.SetStateAction<boolean>>
+    conversation: {}[],
+    setcurrentChat: React.Dispatch<React.SetStateAction<null | {}[]>>,
+    user: {}
 }
 
 export interface Conversation {
