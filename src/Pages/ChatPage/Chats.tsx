@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { ChatPage, Users } from '../../Components'
+import { ChatPage, Users, SearchResult } from '../../Components'
 import "../../Global_Style.css"
 import axios from 'axios'
 
@@ -34,7 +34,7 @@ const Chats = () => {
 
   const searchData  = search(getUsers)
   const user_token = localStorage.getItem("auth_Token")
-  console.log(user)
+  // console.log(user)
   const getConversation = async () => {
     const config = {
       "Authorization": `Bearer ${user_token}`
@@ -67,13 +67,13 @@ const Chats = () => {
       <div className='w-[100%] flex align-center justify-center'>
       <div className='bg-gray-400 w-[35%] overflow-y-auto'>
         <div className='flex justify-center items-center flex-col'>
-          <input className='mt-3 px-1 w-[90%] h-7 rounded outline-none' placeholder='Search' value={ query } onChange={ (e) => setQuery(e.target.value) } />
+          <input className='mt-3 px-1 w-[90%] h-9 rounded outline-none' placeholder='Search' value={ query } onChange={ (e) => setQuery(e.target.value) } />
           <div className='w-[90%] bg-white mt-3 rounded px-1'>
             { searchData?.map((props: any) => (
-              <div className='cursor-pointer hover:text-red-400' onClick={ () => {
+              <div className='' onClick={ () => {
                 setQuery('')
                 setUser(props)
-              }}>{props.userName }</div>
+              } }><SearchResult user='David DevUos' createRoom={ ()=>"hello"} /></div>
             ))}
           </div>
         </div>

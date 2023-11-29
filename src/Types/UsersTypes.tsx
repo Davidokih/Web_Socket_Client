@@ -13,3 +13,8 @@ export interface Conversation {
     user: {}
     // userData?: {},
 }
+
+export interface SearchFunc{
+    user: string,
+    create: ()=>
+}

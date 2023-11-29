@@ -4,6 +4,11 @@ import axios from 'axios'
 import { Conversation } from '../../Types/UsersTypes'
 // import { userContext } from '../../GlobalState/Global'
 
+
+// type messageData = {
+//   message: string;
+//   senderId: string;
+// }
 const ChatPage:React.FC<Conversation> = ({currentChat,user}) => {
 
   // const val = useContext(userContext)
@@ -18,7 +23,7 @@ const ChatPage:React.FC<Conversation> = ({currentChat,user}) => {
 
     await axios.get("http://localhost:1000/api/message", { headers: config }).then((res) => {
       setMessages(res.data.data)
-      console.log(res.data.data);
+      // console.log(res.data.data);
     }).catch((error) => {
       console.log(error);
     })

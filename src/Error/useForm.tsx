@@ -36,6 +36,9 @@ const useFrom = () => {
                         ...errors,
                         email: 'Enter a valid email address'
                     })
+                }else {
+                    let newObj = omit("email", errors)
+                    setErrors(newObj)
                 }
             break;
             case 'password':

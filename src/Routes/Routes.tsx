@@ -4,6 +4,7 @@ import {
     SignUp,
     Chats
 } from "../Pages";
+import {SearchResult} from "../Components"
 // import Private from "../Private";
 const Routes = () => {
     let element = useRoutes([
@@ -18,6 +19,10 @@ const Routes = () => {
         {
             path: "/chat_interface",
             element: <Chats />
+        },
+        {
+            path: "/search_result",
+            element: <SearchResult />
         },
     ])
     return element
