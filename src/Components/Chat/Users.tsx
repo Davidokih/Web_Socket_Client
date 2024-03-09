@@ -1,25 +1,38 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import "../../Global_Style.css"
-import { userApi } from '../../Types/UsersTypes'
+import { IUser, userApi } from '../../Types/UsersTypes'
 import axios from 'axios'
 
-const Users: React.FC<userApi> = ({ conversation, setcurrentChat, user }) => {
-  const [friend, setFriend] = useState()
+const Users = ({conversation, setcurrentChat}: userApi) => {
+  const [friend, setFriend] = useState<IUser>()
+  const [user, setUser] = useState<IUser>()
+
+  const user_token = localStorage.getItem("auth_Token")
+
+  // console.log(friend)
+  const getCurrentUser = async () => {
+    const config = {
+        authorization: `Bearer ${user_token}`,
+    };
+    await axios.get("http://localhost:1000/api/user/single_user", { headers: config }).then((res) => {
+        setUser(res.data.data)
+    }).catch((error) => {
+        throw error.message
+    })
+}
 
   useEffect(() => {
-    const friendId = conversation?.members?.find((el) => el !== user._id)
-    
+    getCurrentUser()
+    const friendId = conversation?.members?.find((el) => el !== user?._id)
     const getUser = async () => {
-      try {
-        const res = await axios.get("http://localhost:1000/api/user?userId=" + friendId)
+      await axios.get("http://localhost:1000/api/user?userId=" + friendId).then((res) => {
         setFriend(res.data.data)
-
-      } catch (error) {
-        console.log(error);
-      }
+      }).catch((error) => {
+        throw error
+        })
     }
     getUser()
-  },[conversation, user])
+  },[conversation,user])
   return (
     <div>
         <div className='flex m-3 cursor-pointer' onClick={()=> setcurrentChat(conversation)}>
@@ -27,7 +40,7 @@ const Users: React.FC<userApi> = ({ conversation, setcurrentChat, user }) => {
           <div className='flex justify-between w-[95%]'>
             <div>
               <p className='font-bold'> {friend?.userName}</p>
-              <span>last seen</span>
+              <span>online</span>
         </div>
         <span className='text-sm font-medium'>4:26pm</span>
           </div>

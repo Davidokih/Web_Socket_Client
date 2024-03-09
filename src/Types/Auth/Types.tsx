@@ -7,8 +7,3 @@ export interface InputNames  {
     handleChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     callback?: ()=> void
 }
-
-export interface ChatMessage {
-    own?: boolean,
-    message?: any
-}
