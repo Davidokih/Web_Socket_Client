@@ -36,8 +36,14 @@ export interface ChatMessage {
 }
 
 export interface IMessages {
+    _id:string
     message: string
     sendeId: string
     conversationId?: string
     createdAt?:string
+}
+
+export interface ISocket {
+    recieverId: string
+    newMessageRecieved: IMessages
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Messages from './Messages'
 import axios from 'axios'
-import { Conversation, IMessages } from '../../Types/UsersTypes'
+import { Conversation, IMessages,ISocket } from '../../Types/UsersTypes'
 import {io} from 'socket.io-client'
 
 
@@ -12,6 +12,7 @@ const ChatPage = ({ currentChat, user }: Conversation) => {
   const [messages, setMessages] = useState<Array<IMessages>>([])
   const [message, setMessage] = useState("")
   const [socketConnected, setSocketConnected] = useState(false)
+  const [socketUser, setSocketUser] = useState()
   const user_token = localStorage.getItem("auth_Token")
 
   const get_messages = async () => {
@@ -33,9 +34,9 @@ const ChatPage = ({ currentChat, user }: Conversation) => {
       authorization: `Bearer ${ user_token }`
     }
 
-    const recieverId = currentChat.members.find((el)=> el !==user._id)
+    // const recieverId = currentChat.members.find((el)=> el !==user._id)
     await axios.post("http://localhost:1000/api/message/create", { message: message, conversationId: currentChat?._id }, { headers: config }).then((res) => {
-      socket.emit('new message', {newMessageRecieved: res.data.data, recieverId:recieverId})
+      socket.emit('new message', {newMessageRecieved: res.data.data, currentChat:currentChat})
       setMessage("")
       setMessages([...messages,res.data.data])
     }).catch((error) => {
@@ -46,9 +47,9 @@ const ChatPage = ({ currentChat, user }: Conversation) => {
 
   useEffect(() => {
     socket = io(ENDPOINT)
-    socket.emit('setup', user)
+    socket.emit('setup', user?._id)
     socket.on('connection',()=> setSocketConnected(true))
-  },[])
+  }, [])
   
   useEffect(() => {
     get_messages()
@@ -56,9 +57,11 @@ const ChatPage = ({ currentChat, user }: Conversation) => {
   }, [currentChat])
 
   useEffect(() => {
-    socket.on('message recieved', (newMessageRecieved) => {
-      if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved._id) {
+    socket.on('message recieved', (newMessageRecieved:ISocket) => {
+      console.log(newMessageRecieved)
+      if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved?._id) {
         //give notification
+        console.log(newMessageRecieved)
       } else {
         setMessage([...message, newMessageRecieved])
         console.log(newMessageRecieved)
