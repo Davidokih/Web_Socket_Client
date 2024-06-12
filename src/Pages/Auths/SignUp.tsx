@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { Input } from "../../Components"
 import { NavLink,useNavigate } from 'react-router-dom'
 import useForm from "../../Error/useForm"
@@ -7,16 +7,20 @@ import axios from 'axios'
 const SignUp = () => {
 
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
   const formLogin = () => {
     console.log("Callback function when form is submitted!");
    }
   const { handleChange, values, errors } = useForm()
   const handleSubmit = async (event: any) => {
 
-    if(event) event.preventDefault();
+    if (event) event.preventDefault();
+    setIsLoading(true)
     await axios.post("http://localhost:1000/api/user/signup", values).then(() => {
+      setIsLoading(false)
       navigate("/signin")
     }).catch((error) => {
+      setIsLoading(false)
       console.log(error);
     })
     if(Object.keys(errors).length === 0 && Object.keys(values).length !==0 ){
@@ -37,7 +41,7 @@ const SignUp = () => {
         <Input nameOfInput="Email" name="email" handleChange={handleChange } errors={errors.email}/>
         <Input nameOfInput="Phone Number" name="phone_No" handleChange={handleChange } errors={errors.phone_No}/>
         <Input nameOfInput="Password" name="password" handleChange={handleChange } errors={errors.password}/>
-        <button className='text-white bg-black py-2 rounded-md font-bold mt-5' type='submit'>Sign Up</button>
+        <button className='text-white bg-black py-2 rounded-md font-bold mt-5' type='submit'>{ isLoading? "Loading...": "Sign Up"}</button>
         <p className='text-center mt-3 font-'>Already have an account <NavLink to="/signin"><span className='font-bold text-blue-500 cursor-pointer'>Sign In</span></NavLink></p>
       </form>
     </div>

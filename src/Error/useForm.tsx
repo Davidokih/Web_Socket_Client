@@ -1,11 +1,15 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
+import { InputValues } from "../Types/Auth/Types";
 
-const omit = (key: any, {[key]: _,...obj})=> obj
+type Errors = {
+    [key: string]: string
+}
+const omit = (key: string, {[key]: _,...obj}: Errors)=> obj
 const useFrom = () => {
-    const [values, setValues] = React.useState({})
-    const [errors, setErrors] = React.useState({})
+    const [values, setValues] = React.useState<InputValues>()
+    const [errors, setErrors] = React.useState<Errors>({})
 
-    const validate = (event: any, name: any, value: any) => {
+    const validate = (name: string, value: string) => {
         switch (name) {
             case "userName":
                 if (value.length <= 2) {
@@ -14,7 +18,7 @@ const useFrom = () => {
                         userName: "userName must have atleast 3 letters"
                     })
                 } else {
-                    let newObj = omit("userName", errors)
+                    const newObj = omit("userName", errors)
                     setErrors(newObj)
                 }
             break;
@@ -25,7 +29,7 @@ const useFrom = () => {
                         phone_No: "phone_No must have atleast 11 numbers"
                     })
                 }else {
-                    let newObj = omit("phone_No", errors)
+                    const newObj = omit("phone_No", errors)
                     setErrors(newObj)
                 }
             break;
@@ -37,7 +41,7 @@ const useFrom = () => {
                         email: 'Enter a valid email address'
                     })
                 }else {
-                    let newObj = omit("email", errors)
+                    const newObj = omit("email", errors)
                     setErrors(newObj)
                 }
             break;
@@ -48,7 +52,7 @@ const useFrom = () => {
                         password:'Password should contains atleast 6 charaterss'
                     })
                 }else {
-                    let newObj = omit("password", errors)
+                    const newObj = omit("password", errors)
                     setErrors(newObj)
                 }
             break
@@ -57,12 +61,12 @@ const useFrom = () => {
         }
     }
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.persist()
-        let name = event.target.name
-        let val = event.target.value
+        const name = event.target.name
+        const val = event.target.value
 
-        validate(event,name,val);
+        validate(name,val);
         
         setValues({
             ...values,

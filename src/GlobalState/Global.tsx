@@ -7,8 +7,7 @@ export const userContext = createContext<Conversation | null>(null);
 export const GlobalFunc: React.FC<PropsWithChildren> = ({ children }) => {
   // const user_token = localStorage.getItem("auth_Token");
   // const [userData, setUserData] = useState<Conversation | undefined>();
-
-  const a = "fghyuhj"
+  
   // useEffect(() => {
   //   const getSingleUser = async () => {
   //     try {

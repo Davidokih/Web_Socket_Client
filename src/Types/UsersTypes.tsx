@@ -8,7 +8,7 @@ export interface userApi {
 export interface Conversation {
     // getSingle_user?: () => void,
     a?: string,
-    currentChat?: IConversation | null,
+    currentChat?: IConversation,
     user: IUser | undefined
     // userData?: {},
 }
